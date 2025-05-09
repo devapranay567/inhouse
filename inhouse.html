@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Media</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f3f2ef;
+      color: #333;
+    }
+
+    header {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    .user-info {
+      font-size: 0.9rem;
+    }
+
+    .dashboard {
+      display: flex;
+      margin-top: 1rem;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    #sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      height: 100%;
+      width: 250px;
+      background-color: white;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      padding: 1rem;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    #sidebar.active {
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .main {
+      flex: 2;
+      background-color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-left: 0;
+    }
+
+    .user-list {
+      flex: 1;
+      background-color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .user-list h2 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .user-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+
+    .user-list .active {
+      font-weight: bold;
+      color: #0a66c2;
+    }
+
+    .chat-window .messages {
+      margin-bottom: 1rem;
+    }
+
+    .message {
+      margin-bottom: 0.5rem;
+    }
+
+    .incoming {
+      background-color: #e9f5ff;
+      padding: 0.5rem;
+      border-radius: 8px;
+      max-width: 60%;
+    }
+
+    .outgoing {
+      background-color: #d1f0d1;
+      padding: 0.5rem;
+      border-radius: 8px;
+      max-width: 60%;
+      margin-left: auto;
+    }
+
+    .time {
+      font-size: 0.75rem;
+      color: #777;
+      margin-top: 0.2rem;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .chat-input button {
+      padding: 0.5rem 1rem;
+      background-color: #0a66c2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .main, .user-list {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="dashboard-page">
+  <header>
+    <button id="menu-toggle" class="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <h1>Academic Media</h1>
+    <div class="user-info"><strong>user@uni.edu</strong></div>
+  </header>
+
+  <nav id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="#">Departments</a></li>
+      <li><a href="#">Facilities</a></li>
+      <li><a href="#">Schedules</a></li>
+      <li><a href="#">Timetables</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="social.html">Social Feed</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="dashboard">
+    <div class="main">
+      <section class="chat-window">
+        <div class="messages">
+          <div class="message incoming">
+            <p>Hi there!</p>
+            <span class="time">10:02 AM</span>
+          </div>
+          <div class="message outgoing">
+            <p>Hello! How are you?</p>
+            <span class="time">10:03 AM</span>
+          </div>
+        </div>
+        <form class="chat-input" action="social.html">
+          <input type="text" placeholder="Type a message…" />
+          <button type="submit">Go to Feed</button>
+        </form>
+      </section>
+    </div>
+
+    <aside class="user-list">
+      <h2>Contacts</h2>
+      <ul>
+        <li class="active">alice@uni.edu</li>
+        <li>bob@uni.edu</li>
+        <li>carol@uni.edu</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+
+    menuToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+  </script>
+</body>
+</html>
